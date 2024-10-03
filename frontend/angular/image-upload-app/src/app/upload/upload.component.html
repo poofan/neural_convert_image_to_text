@@ -1,1 +1,7 @@
-<p>upload works!</p>
+<div class="upload-container">
+  <h2>Upload an Image for Object Detection</h2>
+  <input type="file" (change)="onFileSelected($event)" />
+  <p *ngIf="response">
+    Detected Objects: {{ response | jsonPipe }}
+  </p>
+</div>

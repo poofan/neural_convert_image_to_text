@@ -4,27 +4,23 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.css']
+  styleUrls: ['./upload.component.scss']
 })
 export class UploadComponent {
-  selectedFile: File | null = null;
-  result: any;
+  response: any;
 
   constructor(private http: HttpClient) {}
 
-  onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
-  }
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
 
-  onSubmit(): void {
-    if (this.selectedFile) {
+    if (file) {
       const formData = new FormData();
-      formData.append('file', this.selectedFile, this.selectedFile.name);
+      formData.append('file', file);
 
-      this.http.post('http://localhost:8000/detect-objects', formData)
-        .subscribe(response => {
-          this.result = response;
-        });
+      this.http.post<any>('http://localhost:8000/detect-objects', formData).subscribe(response => {
+        this.response = response;
+      });
     }
   }
 }
